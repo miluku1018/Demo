@@ -1,0 +1,97 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background: linear-gradient( rgba(168, 72, 252, 0.913), rgba(105, 38, 240, 0.95));
+  color: #ffffff;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.6);
+}
+h1 {
+  margin: 0;
+  font-size: 1.5em;
+}
+.games {
+  display: flex;
+  align-items: center;
+}
+.games a {
+  cursor: pointer;
+  text-decoration: none;
+  color: #ffffff;
+}
+.games a:hover {
+  color: #000000;
+  transition: all .8s ease-in-out;
+} 
+
+.games a + a {
+  padding-left: 24px;
+}
+
+.streams{
+  max-width: 1200px;
+  background-color:rgb(247, 247, 248);
+  margin: 30px auto;
+}
+h2 {
+  font-size: 36px;
+  padding-top: 10px;
+  margin-left: 20px;
+  color: #9146FF;
+}
+.streams-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.stream {
+  width: 31.5%;
+  height: 300px;
+  padding: 10px;
+  margin: 10px;
+  box-sizing: border-box;
+  
+}
+.stream .img-box {
+  overflow: hidden;
+  
+}
+.stream a {
+  display: block;
+  text-decoration: none;
+}
+.stream .img-box:hover img{
+  transform: scale3d(1.1,1.1,1);
+  filter: brightness(130%);
+} 
+.stream img {
+  height: 200px;
+  width: 100%;
+  transition: all .4s ease-in-out;
+  border-radius: 3px;
+}
+.stream .info {
+  display: flex;
+}
+.stream .info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 10px;
+}
+.stream .info .info-content {
+  width: 270px;
+  height: 50px;
+}
+.stream .info .info-content .status {
+  margin: 10px 10px 5px 10px;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+  font-size: 19px;
+  color: #000000;
+}
+.stream .info .info-content .display-name {
+  margin-left: 10px;
+  font-size: 14px;
+  color: rgba(128, 128, 128, 0.803);
+}

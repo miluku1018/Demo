@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="index.css">
+  <title>twitch</title>
+  <style></style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="site-name">
+      <h1>Twitch Top Games</h1></div>
+    <div class="games">
+
+    </div>
+  </nav>
+  <section class="streams">
+    
+
+  </section>
+
+</body>
+<script>
+  const apiURL = 'https://api.twitch.tv/kraken';
+  const container = document.querySelector('.games')
+  const streams = document.querySelector('.streams')
+
+  function getGames(callback) {
+    var request = new XMLHttpRequest();
+      request.open('GET', apiURL + '/games/top?limit=5', true);
+      request.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+      request.setRequestHeader('Client-ID', '7kj0upo2ypl1ysel4cbolp537m6iow');
+      request.onload = function() {
+        if (this.status >= 200 && this.status < 400) {
+          callback(JSON.parse(this.response));
+        } else {
+          console.log(this.status, this.responseText)
+        }
+      }
+      request.onerror = function() {
+      console.log('error')
+    };
+    request.send();
+  }  
+  
+  getGames((games) => {
+    let data = games
+    for (let i = 0; i < data.top.length; i++) {
+      let gameName = data.top[i].game.name;  
+      let link = document.createElement('a');
+      link.classList.add('game');
+      link.innerText = `${gameName}`;
+      container.appendChild(link);
+    }
+    document.querySelector('.games').addEventListener('click', function (e){
+      let gameName = e.target.innerText
+      var request = new XMLHttpRequest();
+      request.open('GET', apiURL + '/streams/?game=' + `${gameName}`, true);
+      request.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+      request.setRequestHeader('Client-ID', '7kj0upo2ypl1ysel4cbolp537m6iow');
+      request.onload = function() {
+        if (this.status >= 200 && this.status < 400) {
+          let data = JSON.parse(this.response);
+          console.log(data)
+          let streamTitle = document.createElement('h2');
+          streamTitle.innerText = data.streams[0].game;
+
+          // 將 streams內容清空
+          document.querySelector('.streams').innerHTML = '';
+          // 將 streams 加入內容
+          let streamList = document.createElement('div');
+          streamList.classList.add('streams-list');
+          for (let i = 0; i < 20; i++) {
+            let url = data.streams[i].channel.url
+            let img = data.streams[i].preview.large
+            let profileImage = data.streams[i].channel.logo;
+            let status = data.streams[i].channel.status;
+            let displayName = data.streams[i].channel.display_name;
+            let stream = document.createElement('div')
+            stream.classList.add('stream')
+            stream.innerHTML = 
+            `
+            <div class = "img-box">
+              <a href="${url}">
+                <img src="${img}" alt="photo">
+                <div class="info">
+                <img src="${profileImage}" alt="profile-image"><div class="info-content">
+                  <div class="status">${status}</div>
+                  <div class="display-name">${displayName}</div>
+                </div>
+              </div>
+              </a>
+            </div>
+            
+            `
+            // 將子元素附上父元素
+            streamList.appendChild(stream);
+            streams.appendChild(streamTitle)
+            streams.appendChild(streamList);
+          }
+        } 
+      }
+      request.onerror = function() {
+      console.log('error')
+      };
+      request.send();
+    })
+  })
+
+</script>
+</html>
