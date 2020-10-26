@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('template/head') %>
+</head>
+<body>
+  <%- include('template/front_navbar') %>
+  <section class="banner">
+    <div class="banner__wrapper">
+      <h1>文章列表</h1>
+      <div>Welcome to my blog</div>
+    </div>
+  </section>
+  <div class="container-wrapper">
+    <div class="posts">
+      <% articles.forEach(function(article) { %>
+        <article class="post">
+          <div class="post__header">
+            <div><%= article.title %></div>
+            <div class="post__actions">
+              <% if (username === article.User.username) { %>
+                <a class="post__action" href="/update_articles/<%= article.id %>">編輯</a>
+                <% } %>  
+            </div>
+          </div>
+          <div class="category">分類：<%= article.Category.name %></div>
+          <% const date = new Date(article.createdAt) %>
+          <div class="post__info"><%= date.toDateString() %></div>
+          <div class="post__content"><%= article.content %>
+          </div>
+        </article>
+        <% }) %>    
+    </div>   
+  </div>
+  <footer>Copyright © 2020 Miaohsien's Blog All Rights Reserved.</footer>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('template/head') %>
+</head>
+<body>
+  <%- include('template/back_navbar') %>
+  <section class="banner">
+    <div class="banner__wrapper">
+      <h1>分類專區</h1>
+      <div>Welcome to my blog</div>
+    </div>
+  </section>
+  <div class="container-wrapper">
+    <div class="container">
+      <div class="post">
+        <a class="add_category" href="add_categories">新增分類</a>
+        <% categories.forEach(function(category) { %>
+          <div class="admin-category">
+            <div class="admin-post__title">
+              <%= category.name %>
+            </div>
+            <div class="admin-post__info">
+              <div class="admin-post__created-at">
+                <% const date = new Date(category.createdAt) %>
+                <div class="post__info"><%= date.toDateString() %></div>
+              </div>
+            </div>
+          </div>
+          <% }) %>      
+      </div>
+    </div>
+  </div>
+  <footer>Copyright © 2020 Miaohsien's Blog All Rights Reserved.</footer>
+</body>
+</html>

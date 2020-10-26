@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('template/head') %>
+</head>
+<body>
+  <%- include('template/front_navbar') %>
+  <section class="banner">
+    <div class="banner__wrapper">
+      <h1>存放技術之地</h1>
+      <div>Welcome to my blog</div>
+    </div>
+  </section>
+  <div class="login-wrapper">
+    <h2>Login</h2>
+    <% if (errorMessage && errorMessage.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= errorMessage %>
+      </div>
+    <% } %>  
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Uername</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" name="username">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  <footer>Copyright © 2020 Miaohsien's Blog All Rights Reserved.</footer>
+</body>
+</html>
