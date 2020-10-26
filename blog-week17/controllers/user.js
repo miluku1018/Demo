@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const saltRounds = 10
 const db = require('../models')
 const User = db.User
 
@@ -41,7 +42,35 @@ const userController = {
   logout: (req, res) => {
     req.session.username = null // 把 username reset掉，當作登出
     res.redirect('/')
-  }
+  },
+  register: (req, res) => {
+    res.render('register')
+  },
+  handleRegister: (req, res, next) => {
+    const {username, password, nickname} = req.body
+    if (!username || !password || !nickname) {
+      req.flash('errorMessage', '缺少必要欄位') 
+      return next()
+    }
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+      if (err) {
+        req.flash('errorMessage', err.toString())
+        return next()
+      }
+      User.create({
+        username, 
+        nickname, 
+        password: hash
+      }).then(user => {
+        req.session.username = username 
+        req.session.userId = user.id
+        res.redirect('/')  
+      }).catch(err => {
+        req.flash('errorMessage', err.toString())
+        return next()
+      })
+    })
+  },
 }
 
 module.exports = userController
